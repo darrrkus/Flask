@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+/venv
+test.db
+misc.xml
+modules.xml
+profiles_settings.xml
+vcs.xml
+
