@@ -29,8 +29,32 @@ def index():
             return "There was an issue adding your task"
     else:
         tasks = ToDo.query.order_by(ToDo.date_created).all()
-
         return render_template('index.html', tasks=tasks)
+
+
+@application.route('/delete/<int:id>')
+def delete_task(id):
+    task_to_delete = ToDo.query.get_or_404(id)
+    try:
+        db.session.delete(task_to_delete)
+        db.session.commit()
+        return redirect("/")
+    except:
+        return 'There was a problem deleting that task'
+
+
+@application.route('/update/<int:id>', methods=['POST', 'GET'])
+def update_task(id):
+    task = ToDo.query.get_or_404(id)
+    if request.method == 'POST':
+        task.content = request.form['content']
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was an issue updating your task!'
+    else:
+        return render_template('update.html', task=task)
 
 
 if __name__ == '__main__':
