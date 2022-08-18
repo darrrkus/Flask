@@ -7,7 +7,7 @@ application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 db = SQLAlchemy(application)
 
 
-class ToDo(db.model):
+class ToDo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow())
@@ -16,7 +16,7 @@ class ToDo(db.model):
         return '<Task %r>' % self.id
 
 
-@application.route('/')
+@application.route('/', methods=['POST', 'GET'])
 def index():
     return render_template('index.html')
 
